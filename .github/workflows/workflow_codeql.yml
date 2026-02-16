@@ -71,7 +71,6 @@ jobs:
           
       - name: Build for CodeQL Analysis
         run: mvn clean compile
-        working-directory: lab5-tasklist-phase2 
           
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
