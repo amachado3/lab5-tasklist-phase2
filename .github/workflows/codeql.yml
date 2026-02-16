@@ -21,6 +21,11 @@ on:
     - cron: '40 9 * * 3'
 
 jobs:
+  compile:
+    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    steps:
+      - name: Build for CodeQL Analysis
+        run: mvn clean compile
   analyze:
     name: Analyze (${{ matrix.language }})
     # Runner size impacts CodeQL analysis time. To learn more, please see:
