@@ -51,9 +51,6 @@ jobs:
     #   - https://gh.io/using-larger-runners (GitHub.com only)
     # Consider using larger runners or machines with greater resources for possible analysis time improvements.
     runs-on: 'ubuntu-latest'
-    defaults: 
-      run: 
-        working-directory: lab5-tasklist-phase2
     permissions:
       # required for all workflows
       security-events: write
@@ -74,6 +71,7 @@ jobs:
           
       - name: Build for CodeQL Analysis
         run: mvn clean compile
+        working-directory: lab5-tasklist-phase2 
           
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
