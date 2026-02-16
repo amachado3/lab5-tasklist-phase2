@@ -21,11 +21,25 @@ on:
     - cron: '40 9 * * 3'
 
 jobs:
-  compile:
+  compile-and-test:
+    name: Compile and test
     runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
     steps:
+      # Obter código fonte
+      - name: Checkout
+        uses: actions/checkout@v4
+      # Setup up JDK
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      # Compilar
       - name: Build for CodeQL Analysis
         run: mvn clean compile
+      # Testes unitários
+      - name: Build e testes (JUnit)
+        run: mvn clean test
   analyze:
     name: Analyze (${{ matrix.language }})
     # Runner size impacts CodeQL analysis time. To learn more, please see:
