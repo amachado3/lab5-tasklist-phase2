@@ -24,6 +24,9 @@ jobs:
   compile-and-test:
     name: Compile and test
     runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    defaults: 
+      run: 
+        working-directory: lab5-tasklist-phase2
     steps:
       # Obter código fonte
       - name: Checkout
@@ -49,8 +52,8 @@ jobs:
     # Consider using larger runners or machines with greater resources for possible analysis time improvements.
     runs-on: 'ubuntu-latest'
     defaults: 
-     run: 
-          working-directory: ./lab5-tasklist-phase2
+      run: 
+        working-directory: lab5-tasklist-phase2
     permissions:
       # required for all workflows
       security-events: write
