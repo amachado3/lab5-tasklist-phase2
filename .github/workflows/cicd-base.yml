@@ -76,6 +76,33 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      # Build for AMD64 (to scan the image)
+      - name: Build Docker image
+        id: build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          platforms: linux/amd64
+          push: false
+          load: true
+          
+      # Scan with Trivy
+      - name: Run Trivy vulnerability scanne
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          image-ref: ${{ steps.meta.outputs.tags }}
+          format: 'sarif'
+          output: 'trivy-image-results.sarif'
+          
+      - name: Upload artifact to pipeline metadata
+        uses: actions/upload-artifact@v4
+        with:
+          name: Generate artifact with Trivy image result
+          path: trivy-image-results.sarif
       
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
