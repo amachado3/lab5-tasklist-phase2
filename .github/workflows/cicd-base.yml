@@ -134,7 +134,8 @@ jobs:
         run: |
           echo "${{ steps.meta.outputs.tags }}" | tr ',' '\n' | while read tag; do
             echo "Signing $tag ..."
-            cosign sign --yes "$tag"  
+            cosign sign --yes "$tag"
+            echo "Signing hello"
           done
       
       # Push multi-arch (AMD64 + ARM64)
