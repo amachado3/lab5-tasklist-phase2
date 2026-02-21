@@ -43,6 +43,16 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
 
+  security-scan-2:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+      packages: write
+    needs: security-scan
+      
+    steps:
       # Trivy
       - name: Complete scan with Trivy
         uses: aquasecurity/trivy-action@0.20.0
